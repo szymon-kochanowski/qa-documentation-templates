@@ -1,0 +1,46 @@
+ID,Title,Section,Priority,Type,Preconditions,Steps,Expected Result,Platform
+TC-001,Verify save game auto-recovery after sudden power loss or process kill,Game FQA / Save System,Critical,Functional,"Player has initiated Chapter 02 and reached auto-save checkpoint 'Catacombs_Entrance'.","1. Trigger an in-game autosave checkpoint icon.
+2. Abruptly kill the application process (kill -9 or power plug pull) during active disk write.
+3. Relaunch the application.
+4. Select 'Continue' from Main Menu.","Game detects incomplete save, falls back to the previous intact checkpoint without crashing or corrupting user save profile.",Multiplatform (PS5 / XSX / PC)
+TC-002,Verify system pause and controller disconnect prompt when gamepad battery dies,Console Certification (TRC/TCR),High,Compliance,"Game is running in active gameplay (combat state). DualSense controller connected.","1. Enter combat encounter in Level 04.
+2. Disconnect gamepad (turn off controller or disconnect USB cable).
+3. Observe screen behavior and game audio.","Gameplay immediately pauses. Official platform modal 'Please reconnect controller' is rendered. Audio volume ducks to ambient level.",PlayStation 5 / Xbox Series X
+TC-003,Verify seamless docked to handheld mode transition without asset reload,Console Certification (Lotcheck),High,Compatibility,"Nintendo Switch 2 in Docked TV Mode at 1440p resolution.","1. Run active gameplay in open-world area.
+2. Undock the console to Handheld Mode.
+3. Observe transition time, HUD scaling, and frame stability.","Screen seamlessly scales to 1080p handheld profile within < 1.0 second. No UI clipping, no asset reload stutter, touch input activates.",Nintendo Switch 2
+TC-004,Verify HUD scaling and anchor integrity on 32:9 Super Ultrawide resolution,Display & Rendering,Medium,Visual,"PC build running on Samsung Odyssey G9 (5120x1440 32:9).","1. Set display resolution to 5120x1440 in Graphics Options.
+2. Enter active gameplay.
+3. Open inventory, mini-map, and quest tracker.","HUD elements anchor within the configurable 16:9 safe zone or correctly at viewport edges without stretching or aspect distortion.",PC (Steam / Windows 11)
+TC-005,Verify 3D audio occlusion behind closed soundproof vault door,Audio QA,Medium,Functional,"Player has 7.1 surround sound or spatial binaural headphones enabled.","1. Position an active audio emitter (humming generator) inside Vault Room.
+2. Stand outside Vault Room with door open and verify loud volume.
+3. Close the heavy blast door.","Sound is muffled according to occlusion low-pass filter (>= 18dB attenuation). No audio popping or sudden phase cancellation.",Multiplatform (PC / Console)
+TC-006,Verify JWT Bearer token auto-refresh on 401 Unauthorized expiration,Web & API / Authentication,Critical,Security,"User is logged in on Web Dashboard. Short-lived Access Token has expired.","1. Trigger an authenticated API request (e.g. GET /api/v1/user/profile).
+2. Intercept response returning 401 Token Expired.
+3. Observe HTTP client behavior and network tab.","Client interceptor transparently calls POST /api/v1/auth/refresh, acquires new access token, and retries original request without user logout.",Web (Chrome / Firefox / Safari)
+TC-007,Verify rate limiter responds with HTTP 429 and Retry-After header,Web & API / Security,High,Performance,"Client has valid API key with 60 requests/minute tier.","1. Send 61 rapid GET /api/v1/products requests within 10 seconds using test runner.
+2. Inspect headers and status code of the 61st response.","Server returns HTTP 429 Too Many Requests, valid JSON error body, and 'Retry-After: 50' header.",REST API / Gateway
+TC-008,Verify search query input sanitization against SQL and NoSQL injection payloads,Web & API / Security,Critical,Security,"Search endpoint GET /api/v1/items?q= is active.","1. Dispatch search queries containing ' OR 1=1; --, <script>alert(1)</script>, and {$gt: ''}.
+2. Inspect HTTP response and backend database error logs.","Server responds with 200 OK or 400 Bad Request. All queries are treated as literal text. Zero unhandled SQL/ORM database exceptions.",REST API / Backend
+TC-009,Verify idempotency key prevents duplicate credit card charges on double-click,Web & API / Checkout,Critical,Functional,"User is on checkout step with items in shopping cart. Network throttling set to 3G.","1. Generate unique Idempotency-Key header on checkout form.
+2. Double-click the 'Pay Now' button rapidly twice.
+3. Observe transactions created in payment gateway.","Only exactly ONE payment transaction is processed. Second request returns HTTP 200 with identical transaction ID from cache.",Web / REST API
+TC-010,Verify cursor-based pagination boundary behavior on empty and final page,Web & API / Catalog,Medium,Functional,"Database contains exactly 25 item records. Page size configured to 10.","1. Request GET /api/v1/items?limit=10 (Page 1 - receives 10 items + next_cursor).
+2. Request Page 2 with next_cursor (receives 10 items).
+3. Request Page 3 with next_cursor (receives 5 items + next_cursor=null).
+4. Request beyond last cursor.","Final page correctly returns remaining 5 records with next_cursor null. Extra request returns empty array [] with HTTP 200 OK.",REST API / Backend
+TC-011,Verify state preservation when switching mobile app to background during form input,Mobile QA / Lifecycle,High,Functional,"User is filling out a multi-step verification form (Step 3 of 4).","1. Fill in 6 input fields in verification form.
+2. Press Home button / swipe to switch app to background.
+3. Open Camera app, take 3 photos, then return to tested app after 60 seconds.","App restores state immediately without reloading form. All previously entered text and validation states remain intact.",Mobile (iOS / Android)
+TC-012,Verify offline data synchronization when network connection is restored,Mobile & Web / Offline,High,Reliability,"Device is placed in Airplane Mode / Offline state.","1. Create 3 new offline task entries in the local app database.
+2. Verify UI shows 'Pending Sync' badges.
+3. Disable Airplane Mode to restore Wi-Fi connection.","Background sync worker triggers automatically, flushes queued mutations to cloud backend, and updates items to 'Synced' status.",Mobile / PWA
+TC-013,Verify frame pacing stability under dense volumetric particle emitter,Performance & Optimization,High,Performance,"Test scene loaded with 50,000 GPU particle sparks and heavy alpha blending.","1. Spawn particle emitter in camera view frustum.
+2. Record 1% low and 0.1% low FPS using hardware telemetry capture.
+3. Move camera around emitter for 60 seconds.","Frame rate does not drop below 58 FPS on PS5 / XSX (Performance Mode target 60 FPS). No micro-stuttering or thermal throttling.",PlayStation 5 / Xbox Series X / PC
+TC-014,Verify memory stability and absence of RAM leaks during 45-minute continuous play,Performance & Optimization,Critical,Reliability,"Automated test loop running level transitions, menu toggles, and combat cycles.","1. Monitor process private working set / VRAM memory footprint via telemetry profiler.
+2. Run continuous test loop for 45 minutes across 10 level loads.
+3. Compare baseline RAM usage at minute 5 vs minute 45.","Total allocated RAM growth does not exceed 150 MB (within garbage collection threshold). Zero Out-of-Memory crashes.",Multiplatform (PC / Console)
+TC-015,Verify screen reader focus order and WCAG 2.2 AA accessibility on checkout dialog,Accessibility QA (A11y),Medium,Compliance,"Screen reader active (VoiceOver on macOS/iOS or NVDA on Windows).","1. Navigate to Checkout page using Tab key navigation only.
+2. Trigger the modal dialog 'Confirm Purchase'.
+3. Verify accessibility focus trap, label announcements, and Escape key dismissal.","Focus shifts automatically to first interactive element inside dialog. Background content is inert. Screen reader announces all labels clearly.",Web / Desktop

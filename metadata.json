@@ -1,6 +1,6 @@
 {
-  "name": "web-qa-automation-scripts",
-  "description": "Zestaw autorskich skryptów i narzędzi automatyzacji testów webowych (Python, Node.js, JS, Postman) do weryfikacji API, kontraktów JSON i testów regresyjnych.",
+  "name": "qa-documentation-templates",
+  "description": "Standardized QA documentation templates, TestMo/Jira CSV datasets, and interactive report studio by Szymon Kochanowski",
   "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+  "majorCapabilities": []
 }

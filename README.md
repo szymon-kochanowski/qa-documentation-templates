@@ -1,185 +1,106 @@
-# 🧪 web-qa-automation-scripts
-> **Skrypty automatyzacji testów webowych**  
-> Autor: **Szymon Kochanowski** (QA Engineer)  
-> Licencja: **MIT** (Copyright © 2026 Szymon Kochanowski)
-
-[![License: MIT](https://img.shields.io/badge/License-MIT-purple.svg)](./LICENSE)
-[![QA Stacks](https://img.shields.io/badge/Tech_Stack-Python_|_Node.js_|_JavaScript_|_Postman-blueviolet.svg)](#technologie--technologies)
-[![Tests Status](https://img.shields.io/badge/Tests-PASSING-success.svg)](#uruchamianie-skryptów-cli--running-cli-scripts)
-[![SLA Threshold](https://img.shields.io/badge/SLA_Threshold-%3C_300ms-informational.svg)](#progi-sla-i-kontrakty--sla--contracts)
+# QA Documentation Templates & Interactive Report Studio
+> Production-grade QA engineering documentation templates, TestMo / Jira Xray CSV datasets, and interactive web studio for quality assurance professionals.
+> 
+> **Author:** Szymon Kochanowski  
+> **License:** MIT License  
+> **Repository:** `qa-documentation-templates`
 
 ---
 
-## 🇵🇱 O Projekcie (Opis z portfolio)
-
-> *"Zestaw lekkich skryptów weryfikujących kody odpowiedzi HTTP, integralność danych JSON oraz powtarzalne scenariusze regresyjne w oparciu o 4 technologie: Python, JavaScript, Node.js oraz Postman."*
-
-Projekt **web-qa-automation-scripts** to kompletne, produkcyjne repozytorium inżynierskie QA stworzone do kompleksowej weryfikacji interfejsów API, wykrywania regresji, egzekwowania rygorystycznych progów SLA (czas odpowiedzi < 300ms) oraz badania integralności kontraktów danych JSON i nagłówków bezpieczeństwa (`nosniff`, `frame-options`, `CSP`).
-
-Repozytorium zawiera:
-1. **Niezależne, gotowe do użycia skrypty CLI**:
-   - `scripts/python/api_regression_verifier.py` (`requests`, `pytest`, `jsonschema`)
-   - `scripts/nodejs/http_json_runner.mjs` (natywny Node.js, zero zależności)
-   - `scripts/javascript/json_schema_validator.js` (czysty JS do walidacji kontraktów i anomalii typu `"NaN"`)
-   - `postman/Web_QA_Regression_Collection.postman_collection.json` (kolekcja Postman v2.1 z asercjami `pm.test`)
-2. **Interaktywny Dashboard Testowy (React + Node.js/Express + Tailwind CSS)**:
-   - Wbudowane lokalne **Mock API** z symulatorem usterek chaosu (**"Inject Bug"**):
-     - Wymuszenie `HTTP 500 Internal Server Error`
-     - Zepsucie kontraktu JSON (`price: "NaN"`, brak wymaganych pól, uszkodzone typy)
-     - Wstrzyknięcie opóźnienia `Latency > 800ms` (łamiącego SLA < 300ms)
-     - Odrzucenie autoryzacji `HTTP 401 Unauthorized`
-     - Usunięcie nagłówków bezpieczeństwa
-   - Live Runner z natychmiastowym podglądem logów, czasów w `ms` i wizualnym podświetlaniem błędnych pól JSON.
-   - Narzędzie **JSON Schema Playground** do testowania dowolnych ładunków.
-   - Eksport raportów z testów do formatu **Markdown** i **JSON**.
+## 🌍 Language / Język
+* [English Description](#english)
+* [Opis po Polsku](#polski)
 
 ---
 
-## 🇬🇧 About the Project (Portfolio Summary)
+<a name="english"></a>
+## 🇬🇧 English Overview
 
-> *"A lightweight suite of scripts verifying HTTP response codes, JSON data integrity, and repeatable regression test scenarios across 4 technologies: Python, JavaScript, Node.js, and Postman."*
+This repository serves a dual purpose for modern Quality Assurance teams, SDETs, and Game QA professionals:
+1. **Physical Engineering Templates (`/templates/`):** Ready-to-use, battle-tested templates formatted in Markdown (`.md`), industry-standard CSV for direct import into TestMo / TestRail / Jira Xray, and structured JSON datasets.
+2. **Interactive Web Application (`src/`):** A modern React 19 + TypeScript + Tailwind CSS application providing an interactive Bug Report Builder (with live dual-pane Jira / Markdown / Slack formatters), Test Case & CSV Generator, Interactive Smoke Checklist with live pass-rate auditing, and a Template Explorer with one-click copy and downloads.
 
-**web-qa-automation-scripts** is a comprehensive, production-grade QA engineering repository built to automate API validation, catch regressions, enforce strict SLA response thresholds (<300ms), and inspect JSON contracts and security headers (`X-Content-Type-Options: nosniff`, `X-Frame-Options`, `Content-Security-Policy`).
+### 📁 Repository Structure & Template Catalog
 
----
+| Category | File Path | Standard / Format | Description |
+| :--- | :--- | :---: | :--- |
+| **Game FQA** | [`templates/bug-reports/game-qa-bug-report.md`](templates/bug-reports/game-qa-bug-report.md) | Markdown (`.md`) | Game Functional QA bug report for PC, PS5, Xbox Series X, Switch 2 with repro rates (X/5), engine logs, and TRC/TCR compliance details. |
+| **Web & REST API** | [`templates/bug-reports/web-api-bug-report.md`](templates/bug-reports/web-api-bug-report.md) | Markdown (`.md`) | RFC 9110 HTTP defect report template with cURL commands, status codes, JSON payloads, headers, and microservice trace IDs. |
+| **Test Cases** | [`templates/test-cases/testmo-import-template.csv`](templates/test-cases/testmo-import-template.csv) | CSV (`.csv`) | 15 professional, ready-to-import test cases for TestMo / TestRail / Jira Xray covering console compliance, API security, and performance. |
+| **Test Cases (JSON)** | [`templates/test-cases/testmo-import-template.json`](templates/test-cases/testmo-import-template.json) | JSON (`.json`) | Machine-readable JSON test case dataset for automated CI/CD runners and test orchestrators. |
+| **Test Planning** | [`templates/test-plans/master-test-plan-ieee829.md`](templates/test-plans/master-test-plan-ieee829.md) | Markdown (`.md`) | Full Master Test Plan strictly compliant with IEEE 829-2008 and ISTQB Advanced standards. |
+| **Smoke Checklist** | [`templates/checklists/multiplatform-release-smoke-checklist.md`](templates/checklists/multiplatform-release-smoke-checklist.md) | Markdown (`.md`) | Multiplatform console release smoke checklist covering Sony TRC, Microsoft TCR, and Nintendo Lotcheck requirements. |
+| **Sign-Off & EoD** | [`templates/reports/daily-eod-qa-signoff-report.md`](templates/reports/daily-eod-qa-signoff-report.md) | Markdown (`.md`) | Daily End-of-Day (EoD) summary and milestone release sign-off template for QA Leads and Engineering Managers. |
 
-## 📂 Struktura Repozytorium / Repository Structure
+### 🛠️ Interactive Web Studio Features
+* **Template Explorer:** Browse all templates with tabbed syntax view, formatted preview, clipboard copy, and file download.
+* **Interactive Bug Report Builder:** Generate deterministic, production-grade defect reports with dynamic prefixing (`[MODULE][PLATFORM]`), repro rate selectors, step builder, and dual-pane live exports for Jira Wiki Markup, GitHub Markdown, and Slack/Discord.
+* **Test Case & CSV Generator:** Interactive tabular editor allowing testers to create, edit, filter, and export valid CSV files with UTF-8 BOM compatibility for TestMo, TestRail, and Jira Xray.
+* **Interactive Smoke Checklist:** Real-time audit checklist with Pass / Fail / Blocked / N/A state tracking, progress bars, and formatted export for Slack, email, or Confluence.
+* **Bilingual UI:** Instant switching between English and Polish across the entire web interface.
 
-```text
-web-qa-automation-scripts/
-├── LICENSE                                     # Licencja MIT (Copyright 2026 Szymon Kochanowski)
-├── README.md                                   # Dwujęzyczna dokumentacja inżynierska
-├── package.json                                # Konfiguracja projektu Node.js / scripts
-├── server.ts                                   # Serwer Express + Mock API + Fault Injection
-├── vite.config.ts                              # Konfiguracja bundlera Vite
-│
-├── scripts/                                    # Autorskie skrypty CLI
-│   ├── python/
-│   │   ├── api_regression_verifier.py          # Pytest / Requests / JSONSchema verifier
-│   │   └── requirements.txt                    # Zależności Pythona
-│   ├── nodejs/
-│   │   └── http_json_runner.mjs                # Lekki, natywny runner Node.js (fetch + assert)
-│   └── javascript/
-│       └── json_schema_validator.js            # Czysty moduł walidacji schematów i anomalii JSON
-│
-├── postman/
-│   └── Web_QA_Regression_Collection.postman_collection.json # Kolekcja Postman v2.1
-│
-└── src/                                        # Kod źródłowy Dashboardu React / TS
-    ├── App.tsx                                 # Główny widok dashboardu i orkiestrator testów
-    ├── types/qa.ts                             # Typy TypeScript dla asercji i raportów
-    ├── utils/jsonValidator.ts                  # Moduł walidacji kontraktów JSON
-    ├── utils/jsonValidator.test.ts             # Testy jednostkowe (Node:test runner)
-    ├── data/scriptSources.ts                   # Źródła skryptów do podglądu i pobierania
-    └── components/
-        ├── Header.tsx                          # Nagłówek i nawigacja repozytorium
-        ├── FaultInjector.tsx                   # Panel wstrzykiwania usterek ("Inject Bug")
-        ├── SuiteRunner.tsx                     # Live Runner z podglądem kroków i asercji
-        ├── ScriptViewer.tsx                    # Przeglądarka kodu skryptów z opcją pobrania
-        ├── SchemaPlayground.tsx                # Narzędzie inspekcji kontraktów JSON
-        ├── ApiMockSpec.tsx                     # Dokumentacja Mock API z komendami cURL
-        └── ExportReportModal.tsx               # Modal eksportu raportu (Markdown / JSON)
-```
-
----
-
-## 🚀 Szybki Start / Quick Start
-
-### 1. Uruchomienie Dashboardu Webowego / Running the Web Dashboard
-
+### 🚀 Running the Web Studio Locally
 ```bash
-# Instalacja zależności / Install dependencies
+# Clone the repository
+git clone https://github.com/SzymonKochanowski/qa-documentation-templates.git
+cd qa-documentation-templates
+
+# Install dependencies
 npm install
 
-# Uruchomienie aplikacji deweloperskiej na porcie 3000 / Start dev server on port 3000
+# Start development server on port 3000
 npm run dev
 
-# Uruchomienie testów jednostkowych / Run unit tests
-npm test
-```
-
-Aplikacja dostępna pod adresem: `http://localhost:3000`
-
----
-
-## 🛠️ Uruchamianie Skryptów CLI / Running CLI Scripts
-
-### 1. Python (`requests`, `pytest`, `jsonschema`)
-
-Skrypt weryfikuje statusy HTTP (200, 201, 400, 401, 404, 500), nagłówki bezpieczeństwa, czasy SLA (<300ms) i zgodność ze schematem JSON.
-
-```bash
-# Instalacja bibliotek Python
-pip install -r scripts/python/requirements.txt
-
-# Uruchomienie jako samodzielne narzędzie CLI
-python scripts/python/api_regression_verifier.py --url http://localhost:3000/api/mock --sla 300
-
-# Uruchomienie przez runner Pytest ze szczegółowym raportem
-pytest scripts/python/api_regression_verifier.py -v
-```
-
-### 2. Node.js (`http_json_runner.mjs`)
-
-Lekki skrypt w natywnym Node.js bez zewnętrznych zależności (korzysta z wbudowanego `fetch` i `node:assert`). Realizuje scenariusz E2E:
-`Logowanie -> Pobranie tokenu -> Utworzenie zasobu -> Walidacja kontraktu -> Usunięcie zasobu -> Weryfikacja 404`
-
-```bash
-# Uruchomienie skryptu Node.js
-node scripts/nodejs/http_json_runner.mjs --url http://localhost:3000/api/mock --sla 300
-```
-Skrypt generuje plik raportu `regression_report_node.json`.
-
-### 3. JavaScript (`json_schema_validator.js`)
-
-Czysty moduł JavaScript do walidacji kontraktów JSON i wykrywania anomalii (np. string `"NaN"`, brakujące klucze, puste referencje `null`):
-
-```bash
-node -e "
-const Validator = require('./scripts/javascript/json_schema_validator.js');
-const res = Validator.validate({ price: 'NaN' }, { properties: { price: { type: 'number' } } });
-console.log(res);
-"
-```
-
-### 4. Postman & Newman (`newman`)
-
-Kolekcja Postman v2.1 z asercjami `pm.test` i zmiennymi sesyjnymi (`pm.environment.set`).
-
-```bash
-# Uruchomienie przez Newman CLI
-npx newman run postman/Web_QA_Regression_Collection.postman_collection.json \
-  --env-var "baseUrl=http://localhost:3000/api/mock"
+# Build production bundle
+npm run build
 ```
 
 ---
 
-## 🎯 Scenariusze Testowe & Progi SLA / Scenarios & SLA
+<a name="polski"></a>
+## 🇵🇱 Opis w Języku Polskim
 
-| # | Nazwa Scenariusza | Endpoint | Metoda | Oczekiwany Status | Wymóg SLA | Walidowane Aspekty |
-|---|---|---|---|---|---|---|
-| **1** | Health & Security Check | `/api/mock/health` | `GET` | `200 OK` | `< 300ms` | Nagłówek `X-Content-Type-Options: nosniff`, struktura schematu `health` |
-| **2** | Auth & Token Retrieval | `/api/mock/auth/login` | `POST` | `200 OK` | `< 300ms` | Ekstrakcja Bearer JWT, poprawność obiektu użytkownika |
-| **3** | Catalog Schema Audit | `/api/mock/products` | `GET` | `200 OK` | `< 300ms` | Weryfikacja tablicy `items`, typów `price: number`, enum waluty |
-| **4** | Resource Creation | `/api/mock/products` | `POST` | `201 Created` | `< 300ms` | Zwrócenie wygenerowanego `id`, zgodność typu danych |
-| **5** | Deep Contract Audit | `/api/mock/products/:id`| `GET` | `200 OK` | `< 300ms` | Wykrywanie anomalii wartości (np. string `"NaN"`), brakujących kluczy |
-| **6** | Negative Boundary Check | `/api/mock/products` | `POST` | `400 Bad Request`| `< 300ms` | Odrzucenie niepoprawnego typu ceny (`price: string`) |
-| **7** | Teardown & Idempotency | `/api/mock/products/:id`| `DELETE` | `200/204` | `< 300ms` | Usunięcie zasobu; kolejny `GET` zwraca `404 Not Found` |
+To repozytorium pełni podwójną rolę w warsztacie nowoczesnego inżyniera QA, testera gier oraz specjalisty SDET:
+1. **Fizyczne szablony inżynierskie (`/templates/`):** Gotowe do natychmiastowego wdrożenia szablony w formatach Markdown (`.md`), ustandaryzowany plik CSV do bezpośredniego importu w systemach TestMo / TestRail / Jira Xray oraz ustrukturyzowany zbiór JSON.
+2. **Interaktywne Studio Webowe (`src/`):** Nowoczesna aplikacja webowa stworzona w oparciu o React 19, TypeScript i Tailwind CSS w estetyce fioletowo-grafitowej. Zawiera generator raportów błędów z podglądem na żywo (Jira Wiki Markup, GitHub Markdown, Slack), kreator i eksporter zestawów przypadków testowych do CSV, interaktywną checklistę audytową smoke testów oraz przeglądarkę szablonów.
+
+### 📁 Katalog Szablonów w Folderze `/templates/`
+
+| Kategoria | Ścieżka do Pliku | Standard / Format | Opis Zawartości |
+| :--- | :--- | :---: | :--- |
+| **Game FQA** | [`templates/bug-reports/game-qa-bug-report.md`](templates/bug-reports/game-qa-bug-report.md) | Markdown (`.md`) | Kompletny raport błędu gier dla PC, PS5, Xbox Series X i Switch 2 ze stopniem powtarzalności (X/5), logami silnika i wymogami certyfikacji konsolowej. |
+| **Web & REST API** | [`templates/bug-reports/web-api-bug-report.md`](templates/bug-reports/web-api-bug-report.md) | Markdown (`.md`) | Ustandaryzowany raport błędu REST API (RFC 9110) z poleceniem cURL, kodami HTTP, payloadami JSON, nagłówkami i identyfikatorami śledzenia. |
+| **Przypadki Testowe** | [`templates/test-cases/testmo-import-template.csv`](templates/test-cases/testmo-import-template.csv) | CSV (`.csv`) | 15 profesjonalnych przypadków testowych gotowych do zaimportowania do TestMo / TestRail / Jira Xray (certyfikacja, API, wydajność). |
+| **Przypadki Testowe (JSON)** | [`templates/test-cases/testmo-import-template.json`](templates/test-cases/testmo-import-template.json) | JSON (`.json`) | Maszynowy zbiór danych JSON do automatyzacji testów w potokach CI/CD. |
+| **Plan Testów** | [`templates/test-plans/master-test-plan-ieee829.md`](templates/test-plans/master-test-plan-ieee829.md) | Markdown (`.md`) | Główny Plan Testów w 100% zgodny ze standardem IEEE 829-2008 oraz wytycznymi ISTQB Advanced. |
+| **Checklista Smoke** | [`templates/checklists/multiplatform-release-smoke-checklist.md`](templates/checklists/multiplatform-release-smoke-checklist.md) | Markdown (`.md`) | Multiplatformowa checklista weryfikacji wydań i podstawowych wymogów certyfikacyjnych (Sony TRC, MS TCR, Nintendo Lotcheck). |
+| **Raport Dzienny & Sign-off** | [`templates/reports/daily-eod-qa-signoff-report.md`](templates/reports/daily-eod-qa-signoff-report.md) | Markdown (`.md`) | Raport dzienny podsumowujący (EoD) oraz formalny protokół Milestone Sign-off dla QA Leada i Zarządu. |
+
+### 🛠️ Główne Moduły Studia Webowego
+* **Przeglądarka Szablonów (Template Explorer):** Filtrowanie kategorii, podgląd sformatowanego Markdownu lub czystego kodu źródłowego, kopiowanie jednym kliknięciem i pobieranie plików.
+* **Interaktywny Kreator Zgłoszeń Błędów (Bug Report Builder):** Formularz z inteligentną walidacją, prefiksami komponentów (`[UI][PS5]`), wyborem profilu (Game QA / Web API) oraz symultanicznym eksportem do formatów Jira Wiki Markup, GitHub Markdown i Slack.
+* **Generator Przypadków Testowych & CSV:** W pełni edytowalna tabela z możliwością dodawania, usuwania i edycji kroków testowych oraz eksportem do pliku `.csv` ze znacznikiem UTF-8 BOM.
+* **Interaktywna Checklista Weryfikacyjna:** Klikalny audyt z oznaczeniami Pass/Fail/Blocked/N/A, wykresem postępu i generatorem oficjalnego podsumowania audytu.
+* **Pełna Dwujęzyczność (PL / EN):** Przełącznik języka w nagłówku aplikacji dostępny w każdym module.
+
+### 🚀 Uruchomienie Aplikacji
+```bash
+# Klonowanie repozytorium
+git clone https://github.com/SzymonKochanowski/qa-documentation-templates.git
+cd qa-documentation-templates
+
+# Instalacja zależności
+npm install
+
+# Uruchomienie serwera developerskiego na porcie 3000
+npm run dev
+
+# Kompilacja produkcyjna
+npm run build
+```
 
 ---
 
-## ⚡ Symulacja Usterek (Chaos QA "Inject Bug")
-
-Dashboard posiada przełączniki symulujące rzeczywiste incydenty produkcyjne:
-- **Wymuś HTTP 500**: Zwraca błąd serwera `InternalServerError` i bada reakcję runnera.
-- **Zepsucie Kontraktu JSON**: Wstrzykuje anomalie wartości (pole `price: "NaN"` zamiast liczby, usuwa klucz `id`, psuje formaty dat).
-- **Opóźnienie Odpowiedzi (>800ms)**: Celowo przekracza próg SLA < 300ms, testując alarmy wydajnościowe.
-- **Odrzucenie Autoryzacji (401)**: Blokuje tokeny i bada obsługę błędów autoryzacji.
-- **Usunięcie Nagłówków Bezpieczeństwa**: Sprawdza, czy audytor bezpieczeństwa wykryje brak nagłówka `X-Content-Type-Options`.
-
----
-
-## 📄 Licencja / License
-
-Projekt udostępniany na warunkach licencji **MIT**. Szczegóły w pliku [LICENSE](./LICENSE).  
+## 📄 License
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.  
 Copyright (c) 2026 Szymon Kochanowski.
